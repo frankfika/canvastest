@@ -45,3 +45,4 @@ function getSelectedArea() {
 }
 
 window.onload = adjustCanvasSize;
+  
