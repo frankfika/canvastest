@@ -1,42 +1,47 @@
 function adjustCanvasSize() {
   var image = document.getElementById('image');
-  var canvas = document.getElementById('mosaicCanvas');
-  // 使用图片的自然尺寸，而不是其可能被CSS样式调整后的显示尺寸
-  canvas.width = image.naturalWidth;  // Set canvas width to image's original width
-  canvas.height = image.naturalHeight;  // Set canvas height to image's original height
-}
-
-function drawMosaic(x, y, size) {
-  var blockSize = size;
-  ctx.fillStyle = "rgba(255, 255, 255, 0.5)";  // Semi-transparent white
-  ctx.fillRect(x, y, blockSize, blockSize);
-  rectCoordinates.push({x: x, y: y, size: blockSize});
+  canvas.width = image.clientWidth; // Set canvas width to image's display width
+  canvas.height = image.clientHeight; // Set canvas height to image's display height
 }
 
 var canvas = document.getElementById('mosaicCanvas');
 var ctx = canvas.getContext('2d');
-var rectCoordinates = []; // To store coordinates of each mosaic block
-
-canvas.addEventListener('touchstart', function(e) {
-  e.preventDefault();
-});
+var rectCoordinates = []; // Array to store each mosaic block's coordinates
 
 canvas.addEventListener('touchmove', function(e) {
-  if (e.touches.length > 0) {
-    var touch = e.touches[0];
-    var rect = canvas.getBoundingClientRect();
-    var scaleX = canvas.width / rect.width; // 关键：计算X轴的缩放因子
-    var scaleY = canvas.height / rect.height; // 关键：计算Y轴的缩放因子
-    var x = (touch.clientX - rect.left) * scaleX; // 转换触摸坐标到画布坐标
-    var y = (touch.clientY - rect.top) * scaleY; // 转换触摸坐标到画布坐标
-    drawMosaic(x, y, 20);  // 假设马赛克块大小为20
-  }
+  var touch = e.touches[0];
+  var rect = canvas.getBoundingClientRect();
+  var x = (touch.clientX - rect.left); // Adjusted for any offset
+  var y = (touch.clientY - rect.top);
+  drawMosaic(x, y, 20); // Example block size of 20 pixels
   e.preventDefault();
 }, false);
 
-canvas.addEventListener('touchend', function(e) {
-  e.preventDefault();
-});
+function drawMosaic(x, y, size) {
+  ctx.fillStyle = "rgba(255, 255, 255, 0.5)"; // Example color
+  ctx.fillRect(x, y, size, size);
+  rectCoordinates.push({x: x, y: y, size: size});
+}
 
-// 确保图片加载完毕后调整画布大小
-window.addEventListener('load', adjustCanvasSize);
+function getSelectedArea() {
+  if (rectCoordinates.length === 0) {
+      alert("No mosaic area has been marked.");
+      return;
+  }
+  var minX = rectCoordinates[0].x;
+  var maxX = rectCoordinates[0].x;
+  var minY = rectCoordinates[0].y;
+  var maxY = rectCoordinates[0].y;
+
+  rectCoordinates.forEach(function(coord) {
+      if (coord.x < minX) minX = coord.x;
+      if (coord.x + coord.size > maxX) maxX = coord.x + coord.size;
+      if (coord.y < minY) minY = coord.y;
+      if (coord.y + coord.size > maxY) maxY = coord.y + coord.size;
+  });
+
+  alert("Mosaic area bounds:\n" + "Top-left: (" + minX + ", " + minY + ")\n" + 
+        "Bottom-right: (" + maxX + ", " + maxY + ")");
+}
+
+window.onload = adjustCanvasSize;

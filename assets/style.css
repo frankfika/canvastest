@@ -1,16 +1,18 @@
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  .image-container {
-    position: relative;
-  }
-  
-  .overlay {
-    position: absolute;
-    border: 2px solid red;
-    pointer-events: none;
-  }
-  
+.image-container {
+  position: relative; /* 容器使用相对定位 */
+  width: 100%; /* 根据需要调整宽度 */
+  max-width: 500px; /* 根据实际情况可能需要调整 */
+}
+
+.image-container img {
+  width: 100%; /* 图片填满容器 */
+  display: block; /* 避免图片下方出现空隙 */
+}
+
+#mosaicCanvas {
+  position: absolute; /* 画布使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%; /* 画布宽度与图片一致 */
+  height: 100%; /* 画布高度与图片一致 */
+}
