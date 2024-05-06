@@ -5,31 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>框定图片区域1</title>
 <link rel="stylesheet" href="assets/style.css">
-<script src="https://cdn.jsdelivr.net/npm/tonweb/dist/tonweb.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.3/nacl.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk/dist/tonconnect.min.js"></script>
+
 </head>
 <body>
-  <button id="connectWalletButton">Connect TON Wallet</button>
+  <h1>TON Connect Wallet Integration</h1>
+  <button id="connectWallet">Connect Wallet</button>
+  <button id="disconnectWallet" style="display:none;">Disconnect Wallet</button>
+  <div id="walletInfo" style="margin-top: 20px;"></div>
 
-<script>
-document.getElementById('connectWalletButton').addEventListener('click', async function() {
-    const TonWeb = window.TonWeb;
-    const tonweb = new TonWeb(new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC')); // Use the mainnet API URL
-    
-    // const crypto = require('crypto');
-
-const keyPair = nacl.sign.keyPair();
-const wallet = tonweb.wallet.create({publicKey: keyPair.publicKey, wc: 0});
-
-    const address = await wallet.getAddress();
-    
-    console.log('Connected wallet address:', address.toString());
-
-    // Optionally fetch and display the wallet balance
-    const balance = await tonweb.getBalance(address);
-    alert(`Wallet Address: ${address}\nBalance: ${balance} TON`);
-});
-</script>
+  <script src="assets/tonapp.js"></script>
 
 <div class="container">
   <h2>框定图片区域1</h2>

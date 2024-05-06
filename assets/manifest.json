@@ -1,0 +1,6 @@
+{
+    "name": "My TON App",
+    "logo": "https://example.com/logo.png",
+    "permissions": ["sendTransaction"]
+  }
+  
