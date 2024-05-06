@@ -6,7 +6,7 @@
 <title>框定图片区域1</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="https://cdn.jsdelivr.net/npm/tonweb/dist/tonweb.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.3/nacl.min.js"></script>
 </head>
 <body>
   <button id="connectWalletButton">Connect TON Wallet</button>
@@ -15,8 +15,12 @@
 document.getElementById('connectWalletButton').addEventListener('click', async function() {
     const TonWeb = window.TonWeb;
     const tonweb = new TonWeb(new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC')); // Use the mainnet API URL
+    
+    // const crypto = require('crypto');
 
-    const wallet = tonweb.wallet.create({/* public key or other wallet params */});
+const keyPair = nacl.sign.keyPair();
+const wallet = tonweb.wallet.create({publicKey: keyPair.publicKey, wc: 0});
+
     const address = await wallet.getAddress();
     
     console.log('Connected wallet address:', address.toString());
