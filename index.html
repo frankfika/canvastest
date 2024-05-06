@@ -5,16 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>框定图片区域</title>
 <link rel="stylesheet" href="assest/style.css">
+
+<style>
+  .image-container {
+      width: 100%; /* Example container width */
+      max-width: 500px; /* Example maximum container width */
+      height: auto; /* Maintain aspect ratio */
+      margin-bottom: 20px; /* Example margin */
+      overflow: hidden; /* Prevent image overflow */
+  }
+  .image-container img {
+      width: 100%; /* Make images fill container width */
+      height: auto; /* Maintain aspect ratio */
+      display: block; /* Remove extra space below inline images */
+  }
+</style>
+
 </head>
 <body>
 <div class="container">
   <h2>框定图片区域</h2>
   <div class="image-container">
-    <img src="assest/example.jpg" alt="示例图片" id="image">
+    <img src="assest/example.jpg" alt="示例图片" id="image" onload="adjustCanvasSize()">
     <canvas id="mosaicCanvas" class="overlay"></canvas>
   </div>
   <button onclick="getSelectedArea()">获取选定区域</button>
 </div>
 <script src="assest/script.js"></script>
+<script src="assest/resizeImages.js"></script>
+
 </body>
 </html>
